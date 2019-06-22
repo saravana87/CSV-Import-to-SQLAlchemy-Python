@@ -1,0 +1,4 @@
+http://flask.pocoo.org/docs/1.0/patterns/sqlalchemy/
+https://docs.sqlalchemy.org/en/13/orm/extensions/declarative/basic_use.html
+http://flask.pocoo.org/docs/1.0/quickstart/#a-minimal-application
+https://github.com/mattmakai/compare-python-web-frameworks/blob/master/flask_jinja_sqlalchemy/app.py

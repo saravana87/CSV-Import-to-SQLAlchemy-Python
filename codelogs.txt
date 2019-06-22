@@ -1,0 +1,29 @@
+# columns = ['id','name','date','status']
+        # table_name = Table(tname, metadata,
+        #      Column('id', Integer, primary_key=True),
+        #     Column('name', String(16), nullable=False),
+        #     Column('date', String(60)),
+        #     Column('status', String(50), nullable=False))
+        # for c in table_name.c:        
+        #     print(c) 
+
+        # #bulkload_csv_data_to_database(engine, tname, columns, dataframe_data,",")
+        # listToWrite = dataframe_data.to_dict(orient='records')
+
+        # metadata = sqlalchemy.schema.MetaData(bind=engine,reflect=True)
+        # table = sqlalchemy.Table(table_name, metadata, autoload=True)
+
+        # # Open the session
+        # Session = sessionmaker(bind=engine)
+        # session = Session()
+
+        # # Inser the dataframe into the database in one bulk
+        # engine.execute(table.insert(), listToWrite)
+
+        # # Commit the changes
+        # session.commit()
+
+        # # Close the session
+        # session.close()
+
+
