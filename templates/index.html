@@ -1,0 +1,79 @@
+<html>
+    <head>
+    <title>CSV to Sqlalchemy - Index</title>
+    <script>
+        function showorhide()
+        {
+            var a = document.getElementById("import_option").value;
+            
+            if (a=="YES")
+            document.getElementById("dynamic_field_map").style.display= 'block';
+            else if(a=="NO")
+            document.getElementById("dynamic_field_map").style.display = 'none';
+        }
+    </script>
+</head>
+<body>
+    <div align=center>
+    <table>
+        <tr>
+                <td><a href="/index">Import CSV</a> | </td>
+            <!-- <td><a href="/search" >Search</a> | </td> -->
+            <td><a href="/browse" >Browse</a></td>
+        </tr>
+    </table>
+</div>
+    <div align="center">
+        <div id="top_input_box">
+            <h2>Upload CSV or Give local path</h2>
+            <form action="/get_csv" method="POST" name="search_form" enctype="multipart/form-data">
+                <div>
+                <input type="file"  name="file" /> 
+            <input type="text" width=250 value="E:\Python\uploads\sample.csv" name="filepath" />
+            <br /><small>Make sure header fields are added in the uploaded CSV file</small></div>
+            <input type="submit" />
+            </form>
+        </div>
+        {% if request.method=="POST" and request.form["search_form"] != '' %}
+        {{request.form["search_form"]}}
+        <!-- {{fieldnames}} -->  
+        <div id="middle_input_box">
+            <span id="column_info">You have {{data[0]["total_column"]}} column in total. Please select the appropriate data type. 
+            (<italic><small>If you map the wrong data type the CSV values will throw error.</small></italic>)</span>
+            <form action="/create_table_schema" method="GET" name="import" >
+                <label>Do you want to map the CSV data yourself?</label><br />
+                <select id="import_option" name="import_option" onchange="showorhide()">                        
+                        <option value="YES" selected>YES</option>
+                        <option value="NO">NO</option>
+                      </select>
+        <div id="dynamic_field_map"> 
+                <section>
+                {% for i in range(0,data[0]["total_column"]) %} <!-- Column {{i}} -->
+                <div>{{fieldnames[i]}}  ---> <input type="hidden" value={{fieldnames[i]}} name="inputdata{{i}}" />     <select name="datatypes{{i}}">
+                        <option value="integer">Integer</option>
+                        <option value="string">String</option>
+                        <option value="unicode">Unicode</option>
+                        <option value="boolean">Boolean</option>
+                        <option value="datetime">DateTime</option>
+                        <option value="float">Float</option>
+                        <option value="numeric">Numeric</option>
+                      </select>
+                    </div>                    
+
+                {% endfor %}
+            </section>
+        </div><br />
+            <label>Please enter the table name</label>
+            <input type="text" name="table_name_txt" />
+            <input type="hidden" name="hid_csvpath" value="{{csvpath}}" />
+            </div>
+            {%endif%}
+            <div id="import_csv"><input type="submit" value="Import CSV to Sqlalchemy" /><br>
+                {{import_status}}
+            </div>
+
+        </form>
+    </div>
+</body>
+
+</html>

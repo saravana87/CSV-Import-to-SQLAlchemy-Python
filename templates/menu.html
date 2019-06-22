@@ -1,0 +1,59 @@
+<html>
+    <head>
+    <title>CSV to Sqlalchemy - Search</title>
+</head>
+<body>
+    <div align=center>
+    <table>
+        <tr>
+                <td><a href="/index">Import CSV</a> | </td>
+            <!-- <td><a href="/search" >Search</a> | </td> -->
+            <td><a href="/browse" >Browse</a></td>
+        </tr>
+    </table>
+</div>
+    <div align="center">
+        <div>
+            <h2>Directory Search</h2>
+            <form action="/search" method="POST" enctype="multipart/form-data">
+            <input type="file"  name="file" /> 
+            <input type="text" value="E:\Python\uploads" name="filepath" />
+            <input type="submit" />
+            </form>
+        </div>
+    </div>
+    <div align="center">
+        <form name="browse_form" method="GET">
+        <table border="1">
+            <tr>
+                <th >Table Names & Column Details</th>                
+            </tr>
+            {% for tname in table_names %} 
+            <tr>
+                <td><a href="/browse?tname={{tname}}">{{tname}}</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+    </form>
+    </div>
+    <div align="center">
+        {% if request.args.get["tname"] != None %}
+        <span>{{column_details}}</span>
+        <div align="center" style="display: none">
+            <form action="/browse?sql_query=1" method="GET">
+            <h3>Enter your query (select * from table_name)</h3>
+            <textarea name="sql_query"></textarea> <input type="hidden" name="tname" value="{{tname}}" />
+            <input type="submit" name="execute_qry" value="Submit" />
+        </form>
+        </div>
+        <div align="center">
+                <h2>Results</h2>
+                <div name="sql_results">
+                    {{table_results}}
+                </div>
+            </div>
+    </div>
+    {% endif %}
+</body>
+
+</html>
